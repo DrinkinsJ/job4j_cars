@@ -56,7 +56,7 @@ public class UserRepository {
         Session session = sf.openSession();
         try {
             session.beginTransaction();
-            session.delete(userId);
+            session.createQuery("DELETE User where id = :userId").setParameter("userId", userId).executeUpdate();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -93,7 +93,8 @@ public class UserRepository {
         Optional<User> user = Optional.empty();
         try {
             session.beginTransaction();
-            user = Optional.of(session.get(User.class, userId));
+            user = session.createQuery("from User Where id = :userId", User.class)
+                    .setParameter("userId", userId).uniqueResultOptional();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
@@ -133,7 +134,7 @@ public class UserRepository {
         Optional<User> user = Optional.empty();
         try {
             session.beginTransaction();
-            user = Optional.of(session.createQuery("from User where login like :login", User.class).uniqueResult());
+            user = session.createQuery("from User where login like :login", User.class).uniqueResultOptional();
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
