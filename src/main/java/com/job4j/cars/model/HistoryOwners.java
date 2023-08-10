@@ -4,20 +4,19 @@ import lombok.*;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name = "auto_user")
-@Data
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@NoArgsConstructor
+@Table(name = "history_owners")
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-public class User {
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class HistoryOwners {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
-    private String login;
-    private String password;
-
+    private int carId;
+    private int ownerId;
 }
