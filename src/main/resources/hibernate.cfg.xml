@@ -20,7 +20,5 @@
         <mapping class="com.job4j.cars.model.Car"/>
         <mapping class="com.job4j.cars.model.Owner"/>
         <mapping class="com.job4j.cars.model.Engine"/>
-        <mapping class="com.job4j.cars.model.History"/>
-        <mapping class="com.job4j.cars.model.HistoryOwners"/>
     </session-factory>
 </hibernate-configuration>
