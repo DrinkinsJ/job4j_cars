@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 @Getter
 @Setter
 public class Car {
@@ -22,7 +22,7 @@ public class Car {
     private int id;
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "engine_id")
     private Engine engine;
 
@@ -33,4 +33,10 @@ public class Car {
     )
     private Set<Owner> owners = new HashSet<>();
 
+
+    public Car(String name, Engine engine, Set<Owner> owners) {
+        this.name = name;
+        this.engine = engine;
+        this.owners = owners;
+    }
 }

@@ -70,7 +70,7 @@ public class HbmCarRepository implements CarRepository {
     public Collection<Car> findAll() {
         Collection<Car> cars = Collections.emptyList();
         try {
-            cars = crudRepository.query("SELECT FROM Car", Car.class);
+            cars = crudRepository.query("From Car", Car.class);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

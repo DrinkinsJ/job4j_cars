@@ -14,5 +14,7 @@ public interface EngineRepository {
 
     Optional<Engine> findById(int id);
 
+    Optional<Engine> findByName(String name);
+
     Collection<Engine> findAll();
 }

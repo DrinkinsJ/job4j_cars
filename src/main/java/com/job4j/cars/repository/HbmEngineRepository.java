@@ -67,10 +67,22 @@ public class HbmEngineRepository implements EngineRepository {
     }
 
     @Override
+    public Optional<Engine> findByName(String name) {
+        Optional<Engine> engineOptional = Optional.empty();
+        try {
+            engineOptional = crudRepository.optional("FROM Engine Where name = :name", Engine.class,
+                    Map.of("name", name));
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+        return engineOptional;
+    }
+
+    @Override
     public Collection<Engine> findAll() {
         Collection<Engine> engines = Collections.emptyList();
         try {
-            engines = crudRepository.query("SELECT FROM Engine", Engine.class);
+            engines = crudRepository.query("FROM Engine", Engine.class);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

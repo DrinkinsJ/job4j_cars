@@ -69,7 +69,7 @@ public class HbmOwnerRepository implements OwnerRepository {
     public Collection<Owner> findAll() {
         Collection<Owner> owners = Collections.emptyList();
         try {
-            owners = crudRepository.query("SELECT FROM Owner", Owner.class);
+            owners = crudRepository.query("FROM Owner", Owner.class);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
