@@ -1,9 +1,7 @@
 package com.job4j.cars;
 
-import com.job4j.cars.model.Engine;
-import com.job4j.cars.repository.CrudRepository;
-import com.job4j.cars.repository.EngineRepository;
-import com.job4j.cars.repository.HbmEngineRepository;
+import com.job4j.cars.model.Post;
+import com.job4j.cars.repository.*;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -22,11 +20,14 @@ public class HmbRunner {
             SessionFactory sf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
             CrudRepository crudRepository = new CrudRepository(sf);
             EngineRepository engineRepository = new HbmEngineRepository(crudRepository);
+            PostRepository postRepository = new HbmPostRepository(crudRepository);
 
-            Collection<Engine> engines = engineRepository.findAll();
 
-            for (Engine engine : engines) {
-                System.out.println(engine);
+            Collection<Post> posts = postRepository.findByCar("car_1");
+            posts.forEach(System.out::println);
+            System.out.println("---------------------");
+            for (Post p : posts) {
+                System.out.println(p.getCar().getName());
             }
 
         } catch (Exception e) {

@@ -58,8 +58,7 @@ public class HbmEngineRepositoryTest {
     public void whenDeleteByIdThenReturnTrue() {
         Engine engine = new Engine("engine_1");
         repository.save(engine);
-        var actualEngine = repository.findByName(engine.getName());
-        boolean isDeleted = repository.deleteById(actualEngine.orElseThrow().getId());
+        boolean isDeleted = repository.deleteById(engine.getId());
         assertThat(isDeleted).isTrue();
     }
 

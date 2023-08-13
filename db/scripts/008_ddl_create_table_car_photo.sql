@@ -1,4 +1,4 @@
-create table files
+create table car_photo
 (
     id           serial primary key,
     name         varchar not null,

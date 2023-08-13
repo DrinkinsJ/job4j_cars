@@ -9,10 +9,9 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Data
 @ToString(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "auto_post")
 public class Post {
@@ -20,7 +19,6 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @ToString.Include
     private int id;
     private String description;
     private LocalDateTime created = LocalDateTime.now();
@@ -30,7 +28,12 @@ public class Post {
     @JoinColumn(name = "auto_user_id")
     private User user;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
+    @ToString.Exclude
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "auto_post_id")
     private List<PriceHistory> priceHistory = new ArrayList<>();
 
@@ -39,4 +42,9 @@ public class Post {
             joinColumns = {@JoinColumn(name = "post_id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private List<User> participates = new ArrayList<>();
+
+    @ToString.Exclude
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "auto_post_id", foreignKey = @ForeignKey(name = "car_photo_auto_post_id_fkey"))
+    private List<CarPhoto> photos = new ArrayList<>();
 }

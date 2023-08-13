@@ -10,4 +10,5 @@
     <include file="scripts/005_ddl_create_participates_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/006_ddl_create_tables.sql" relativeToChangelogFile="true"/>
     <include file="scripts/007_ddl_alter_table_drop_history.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/008_ddl_create_table_car_photo.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>
