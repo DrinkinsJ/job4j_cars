@@ -41,7 +41,7 @@ public class HbmUserRepository implements UserRepository {
             crudRepository.run(session -> session.merge(user));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -62,7 +62,7 @@ public class HbmUserRepository implements UserRepository {
             );
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -86,7 +86,7 @@ public class HbmUserRepository implements UserRepository {
         try {
             users = crudRepository.query("SELECT FROM User", User.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return users;
     }

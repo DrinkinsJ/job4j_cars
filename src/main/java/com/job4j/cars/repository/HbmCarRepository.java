@@ -24,7 +24,7 @@ public class HbmCarRepository implements CarRepository {
             crudRepository.run(session -> session.persist(car));
             carOptional = Optional.of(car);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return carOptional;
     }
@@ -36,7 +36,7 @@ public class HbmCarRepository implements CarRepository {
             crudRepository.run(session -> session.merge(car));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -49,7 +49,7 @@ public class HbmCarRepository implements CarRepository {
                     Map.of("id", id));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -61,7 +61,7 @@ public class HbmCarRepository implements CarRepository {
             carOptional = crudRepository.optional("FROM Car Where id = Id", Car.class,
                     Map.of("id", id));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return carOptional;
     }
@@ -72,7 +72,7 @@ public class HbmCarRepository implements CarRepository {
         try {
             cars = crudRepository.query("From Car", Car.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return cars;
     }

@@ -23,7 +23,7 @@ public class HbmOwnerRepository implements OwnerRepository {
             crudRepository.run(session -> session.persist(owner));
             engineOptional = Optional.of(owner);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return engineOptional;
     }
@@ -35,7 +35,7 @@ public class HbmOwnerRepository implements OwnerRepository {
             crudRepository.run(session -> session.merge(owner));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -48,7 +48,7 @@ public class HbmOwnerRepository implements OwnerRepository {
                     Map.of("id", id));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -60,7 +60,7 @@ public class HbmOwnerRepository implements OwnerRepository {
             ownerOptional = crudRepository.optional("FROM Owner Where id = Id", Owner.class,
                     Map.of("id", id));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return ownerOptional;
     }
@@ -71,7 +71,7 @@ public class HbmOwnerRepository implements OwnerRepository {
         try {
             owners = crudRepository.query("FROM Owner", Owner.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return owners;
     }

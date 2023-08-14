@@ -22,7 +22,7 @@ public class HbmPostRepository implements PostRepository {
             crudRepository.run(session -> session.persist(post));
             postOptional = Optional.of(post);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return postOptional;
     }
@@ -34,7 +34,7 @@ public class HbmPostRepository implements PostRepository {
             crudRepository.run(session -> session.merge(post));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -47,7 +47,7 @@ public class HbmPostRepository implements PostRepository {
                     Map.of("id", id));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -58,7 +58,7 @@ public class HbmPostRepository implements PostRepository {
         try {
             posts = crudRepository.query("FROM Post p JOIN FETCH p.photos", Post.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return posts;
     }
@@ -70,7 +70,7 @@ public class HbmPostRepository implements PostRepository {
             postOptional = crudRepository.optional("FROM Post Where id = Id", Post.class,
                     Map.of("id", id));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return postOptional;
     }
@@ -83,7 +83,7 @@ public class HbmPostRepository implements PostRepository {
             posts = crudRepository.query("FROM Post WHERE created >= :time", Post.class,
                     Map.of("time", time));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return posts;
     }
@@ -95,7 +95,7 @@ public class HbmPostRepository implements PostRepository {
         try {
             posts = crudRepository.query("SELECT DISTINCT p FROM Post p JOIN FETCH p.photos WHERE p.photos IS NOT EMPTY", Post.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return posts;
     }

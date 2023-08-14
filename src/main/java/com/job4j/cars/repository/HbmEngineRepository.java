@@ -24,7 +24,7 @@ public class HbmEngineRepository implements EngineRepository {
             crudRepository.run(session -> session.persist(engine));
             engineOptional = Optional.of(engine);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return engineOptional;
     }
@@ -36,7 +36,7 @@ public class HbmEngineRepository implements EngineRepository {
             crudRepository.run(session -> session.merge(engine));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -49,7 +49,7 @@ public class HbmEngineRepository implements EngineRepository {
                     Map.of("id", id));
             res = true;
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return res;
     }
@@ -61,7 +61,7 @@ public class HbmEngineRepository implements EngineRepository {
             engineOptional = crudRepository.optional("FROM Engine Where id = Id", Engine.class,
                     Map.of("id", id));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return engineOptional;
     }
@@ -73,7 +73,7 @@ public class HbmEngineRepository implements EngineRepository {
             engineOptional = crudRepository.optional("FROM Engine Where name = :name", Engine.class,
                     Map.of("name", name));
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return engineOptional;
     }
@@ -84,7 +84,7 @@ public class HbmEngineRepository implements EngineRepository {
         try {
             engines = crudRepository.query("FROM Engine", Engine.class);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return engines;
     }
