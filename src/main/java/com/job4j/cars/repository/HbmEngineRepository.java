@@ -15,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 public class HbmEngineRepository implements EngineRepository {
 
-    CrudRepository crudRepository;
+    private final CrudRepository crudRepository;
 
     @Override
     public Optional<Engine> save(Engine engine) {
@@ -58,7 +58,7 @@ public class HbmEngineRepository implements EngineRepository {
     public Optional<Engine> findById(int id) {
         Optional<Engine> engineOptional = Optional.empty();
         try {
-            engineOptional = crudRepository.optional("FROM Engine Where id = Id", Engine.class,
+            engineOptional = crudRepository.optional("FROM Engine Where id = :id", Engine.class,
                     Map.of("id", id));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

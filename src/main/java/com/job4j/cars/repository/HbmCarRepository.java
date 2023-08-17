@@ -15,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 public class HbmCarRepository implements CarRepository {
 
-    CrudRepository crudRepository;
+    private final CrudRepository crudRepository;
 
     @Override
     public Optional<Car> save(Car car) {
@@ -58,7 +58,7 @@ public class HbmCarRepository implements CarRepository {
     public Optional<Car> findById(int id) {
         Optional<Car> carOptional = Optional.empty();
         try {
-            carOptional = crudRepository.optional("FROM Car Where id = Id", Car.class,
+            carOptional = crudRepository.optional("FROM Car Where id = :id", Car.class,
                     Map.of("id", id));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

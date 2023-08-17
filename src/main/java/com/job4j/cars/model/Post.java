@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -13,38 +12,40 @@ import java.util.List;
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "auto_post")
+@Table(name = "posts")
+@Builder
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "file_id")
+    private File file;
+
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "price", nullable = false)
+    private int price;
+
+    @Column(name = "created")
     private LocalDateTime created = LocalDateTime.now();
 
-    @ToString.Include
-    @ManyToOne
-    @JoinColumn(name = "auto_user_id")
-    private User user;
+    @Column(name = "sold", columnDefinition = "boolean default false")
+    private boolean isSold;
 
-    @OneToOne
-    @JoinColumn(name = "car_id")
+    @ManyToOne
+    @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
-    @ToString.Exclude
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "auto_post_id")
-    private List<PriceHistory> priceHistory = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @ManyToMany
-    @JoinTable(name = "participates",
-            joinColumns = {@JoinColumn(name = "post_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")})
-    private List<User> participates = new ArrayList<>();
-
-    @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "auto_post_id", foreignKey = @ForeignKey(name = "car_photo_auto_post_id_fkey"))
-    private List<CarPhoto> photos = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id")
+    private List<PriceHistory> priceHistories;
 }

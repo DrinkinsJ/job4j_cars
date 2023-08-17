@@ -1,6 +1,6 @@
 package com.job4j.cars.repository;
 
-import com.job4j.cars.model.Owner;
+import com.job4j.cars.model.File;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
@@ -11,28 +11,29 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-@Slf4j
 @AllArgsConstructor
-public class HbmOwnerRepository implements OwnerRepository {
+@Slf4j
+public class HbmFileRepository implements FileRepository {
+
     private final CrudRepository crudRepository;
 
     @Override
-    public Optional<Owner> save(Owner owner) {
-        Optional<Owner> engineOptional = Optional.empty();
+    public Optional<File> save(File file) {
+        Optional<File> fileOptional = Optional.empty();
         try {
-            crudRepository.run(session -> session.persist(owner));
-            engineOptional = Optional.of(owner);
+            crudRepository.run(session -> session.persist(file));
+            fileOptional = Optional.of(file);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return engineOptional;
+        return fileOptional;
     }
 
     @Override
-    public boolean update(Owner owner) {
+    public boolean update(File file) {
         boolean res = false;
         try {
-            crudRepository.run(session -> session.merge(owner));
+            crudRepository.run(session -> session.merge(file));
             res = true;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -44,7 +45,7 @@ public class HbmOwnerRepository implements OwnerRepository {
     public boolean deleteById(int id) {
         boolean res = false;
         try {
-            crudRepository.run("DELETE FROM Owner WHERE id = :id",
+            crudRepository.run("DELETE FROM File WHERE id = :id",
                     Map.of("id", id));
             res = true;
         } catch (Exception e) {
@@ -54,25 +55,25 @@ public class HbmOwnerRepository implements OwnerRepository {
     }
 
     @Override
-    public Optional<Owner> findById(int id) {
-        Optional<Owner> ownerOptional = Optional.empty();
+    public Optional<File> findById(int id) {
+        Optional<File> fileOptional = Optional.empty();
         try {
-            ownerOptional = crudRepository.optional("FROM Owner Where id = :id", Owner.class,
+            fileOptional = crudRepository.optional("FROM File Where id = :id", File.class,
                     Map.of("id", id));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return ownerOptional;
+        return fileOptional;
     }
 
     @Override
-    public Collection<Owner> findAll() {
-        Collection<Owner> owners = Collections.emptyList();
+    public Collection<File> findAll() {
+        Collection<File> files = Collections.emptyList();
         try {
-            owners = crudRepository.query("FROM Owner", Owner.class);
+            files = crudRepository.query("FROM File", File.class);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return owners;
+        return files;
     }
 }

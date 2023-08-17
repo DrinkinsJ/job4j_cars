@@ -3,40 +3,37 @@ package com.job4j.cars.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "car")
+@Table(name = "cars")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(onlyExplicitlyIncluded = true)
-@Getter
-@Setter
+@Data
+@Builder
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
-    private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "model", nullable = false)
+    private String model;
+
+    @ManyToOne
     @JoinColumn(name = "engine_id")
     private Engine engine;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "history_owners",
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "owners_history",
             joinColumns = {@JoinColumn(name = "car_id")},
             inverseJoinColumns = {@JoinColumn(name = "owner_id")}
     )
-    private Set<Owner> owners = new HashSet<>();
-
-
-    public Car(String name, Engine engine, Set<Owner> owners) {
-        this.name = name;
-        this.engine = engine;
-        this.owners = owners;
-    }
+    private Set<Owner> owners;
 }

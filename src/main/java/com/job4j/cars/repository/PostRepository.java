@@ -22,5 +22,5 @@ public interface PostRepository {
 
     List<Post> findPostWithPhoto();
 
-    List<Post> findByCar(String carName);
+    List<Post> findByBrand(String carName);
 }

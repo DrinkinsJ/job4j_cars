@@ -3,8 +3,6 @@ package com.job4j.cars.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "owners")
@@ -13,23 +11,18 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString(onlyExplicitlyIncluded = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
 public class Owner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     @ToString.Include
     private int id;
-    @ToString.Include
+
+    @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "history_owners",
-            joinColumns = {@JoinColumn(name = "owner_id")},
-            inverseJoinColumns = {@JoinColumn(name = "car_id")}
-    )
-    private Set<Car> cars = new HashSet<>();
 }

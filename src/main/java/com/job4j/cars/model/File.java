@@ -4,20 +4,22 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
-@Table(name = "engines")
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Entity
+@Table(name = "files")
 @Builder
-public class Engine {
-
+public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
 
-    @Column(name = "model", nullable = false)
-    private String model;
+    @Column(name = "path", nullable = false)
+    private String path;
+
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
 }

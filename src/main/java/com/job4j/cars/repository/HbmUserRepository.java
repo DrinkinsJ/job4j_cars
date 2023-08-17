@@ -84,7 +84,7 @@ public class HbmUserRepository implements UserRepository {
     public Collection<User> findAll() {
         Collection<User> users = Collections.emptyList();
         try {
-            users = crudRepository.query("SELECT FROM User", User.class);
+            users = crudRepository.query("FROM User", User.class);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }

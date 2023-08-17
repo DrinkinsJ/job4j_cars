@@ -56,7 +56,7 @@ public class HbmPostRepository implements PostRepository {
     public Collection<Post> findAll() {
         Collection<Post> posts = Collections.emptyList();
         try {
-            posts = crudRepository.query("FROM Post p JOIN FETCH p.photos", Post.class);
+            posts = crudRepository.query("FROM Post", Post.class);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -67,7 +67,7 @@ public class HbmPostRepository implements PostRepository {
     public Optional<Post> findById(int id) {
         Optional<Post> postOptional = Optional.empty();
         try {
-            postOptional = crudRepository.optional("FROM Post Where id = Id", Post.class,
+            postOptional = crudRepository.optional("FROM Post Where id = :id", Post.class,
                     Map.of("id", id));
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -93,7 +93,7 @@ public class HbmPostRepository implements PostRepository {
 
         List<Post> posts = new ArrayList<>();
         try {
-            posts = crudRepository.query("SELECT DISTINCT p FROM Post p JOIN FETCH p.photos WHERE p.photos IS NOT EMPTY", Post.class);
+            posts = crudRepository.query("FROM Post WHERE file_id IS NOT NULL", Post.class);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
@@ -101,8 +101,8 @@ public class HbmPostRepository implements PostRepository {
     }
 
     @Override
-    public List<Post> findByCar(String carName) {
-        return crudRepository.query("FROM Post p WHERE p.car.name = :fName",
-                Post.class, Map.of("fName", carName));
+    public List<Post> findByBrand(String brand) {
+        return crudRepository.query("FROM Post p WHERE p.car.brand = :brand",
+                Post.class, Map.of("brand", brand));
     }
 }
